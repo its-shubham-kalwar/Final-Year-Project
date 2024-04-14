@@ -12,7 +12,12 @@ const port = 5000;
 
 connectDb();
 
-app.use(cors());
+app.use(
+    cors({
+    origin: "http://localhost:5173",
+    Credentials: true,
+})
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api",routes);
