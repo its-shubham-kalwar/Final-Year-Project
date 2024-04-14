@@ -1,11 +1,30 @@
 import { useContext } from "react";
 import BlogContext from "../context/BlogContext";
 import AdminNavbar from "../components/AdminNavbar";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Admin = () => {
 
 const {isAuth, SetIsAuth} = useContext(BlogContext);
 
+const handleLogin = async(e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5000/api/login",{
+      username : e.target.username.value,
+      password : e.target.password.value,
+
+    });
+    const data = await res.data;
+    toast.success(data.message)
+    SetIsAuth(true);
+
+  } catch (error) {
+    console.log(error.message)
+  }
+
+}
 
   return (
     <div>
@@ -13,7 +32,7 @@ const {isAuth, SetIsAuth} = useContext(BlogContext);
       {
         !isAuth?  (      
         <div className="h-screen flex justify-center items-center">
-        <form action="" className='grid grid-cols-1 gap-3 bg-white w-[80vw] md:w-[20vw] p-3 rounded-lg'>
+        <form onSubmit={handleLogin} className='grid grid-cols-1 gap-3 bg-white w-[80vw] md:w-[20vw] p-3 rounded-lg'>
 
           <div className='flex flex-col'>
             <label htmlFor="username" className='text-lg font-semibold text-gray-600'>Username</label>

@@ -10,8 +10,9 @@ export default function App() {
   const[isAuth,setIsAuth] = useState(false)
 
   return (
-    <BlogContext.Provider value={{isAuth,setIsAuth}} > 
+    <BlogContext.Provider value={{isAuth, setIsAuth}} > 
     <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
