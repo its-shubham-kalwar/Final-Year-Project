@@ -4,6 +4,7 @@ import Admin from "./pages/Admin";
 import Blog from "./pages/Blog";
 import BlogContext from "./context/BlogContext";
 import { useState } from "react";
+import { Toaster } from 'react-hot-toast';
 
 export default function App() {
 
