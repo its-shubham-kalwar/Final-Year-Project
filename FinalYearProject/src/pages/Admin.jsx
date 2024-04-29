@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import BlogContext from "../context/BlogContext";
 import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { checkAuth } from "../helpers/checkAuth";
+import CreateBlog from "../components/CreateBlog"
 
 const Admin = () => {
 
@@ -24,7 +26,17 @@ const handleLogin = async(e) => {
     console.log(error.message)
   }
 
-}
+};
+
+
+
+useEffect(() => {
+  checkAuth()
+  .then((data) => SetIsAuth(data))
+  .catch((error) => console.log(error.message));
+}, []);
+
+
 
   return (
     <div>
@@ -60,6 +72,7 @@ const handleLogin = async(e) => {
       </div> ): (
       <div>
           <AdminNavbar/>
+          <CreateBlog/>
         </div>
         
       )}
