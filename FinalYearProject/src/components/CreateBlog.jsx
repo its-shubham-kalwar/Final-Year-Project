@@ -1,5 +1,24 @@
+import { MdDelete } from "react-icons/md";
+import JoditEditor from "jodit-react";
+import { useRef, useState } from "react";
 
 const CreateBlog = () => {
+
+    const editor = useRef(null);
+
+    const [title,setTitle] = useState("");
+    const [thumbnail,setThumbnail] = useState(null);
+    const [content,setContent] = useState("");
+    const [progress,setProgress] = useState(0);
+    const [tags,setTags] = useState([]);
+    const [currentTag,setCurrentTag] = useState("");
+
+
+    const addTag = (tag) => setTags((prev) => [...prev, tag])
+
+
+    const removeTag = (tag) => setTags((prev) => prev.filter((t)=> t !== tag));
+
     return (
         <div className="md:w-[60vw] bg-white my-20 mx-auto p-4 rounded-2xl">
             <h3 className="text-2xl text-gray-600 text-center">
@@ -52,7 +71,37 @@ const CreateBlog = () => {
                     />
                     <button className="py-2 px-8 text-base bg-purple-500 hover:bg-purple-400 rounded-3xl text-white font-semibold w-fit">Add Tag</button>
                     </div>
-                    
+
+                    <label htmlFor="tags" className="text-lg font-semibold text-gray-600">
+                       Selected Tags 
+                    </label>
+                    <div className="bg-gray-100 rounded-2xl">
+                        <div className="flex justify-between items-center px-2 capitalized">
+                            <span>Programming</span>
+                            <MdDelete className="text-red-400 hover:text-req-600
+                            cursor-pointer"/>
+                        </div>
+                        <div className="flex justify-between items-center px-2 capitalized">
+                            <span>ReactJs</span>
+                            <MdDelete className="text-red-400 hover:text-req-600
+                            cursor-pointer"/>
+                        </div>
+                        <div className="flex justify-between items-center px-2 capitalized">
+                            <span>Mern Stack</span>
+                            <MdDelete className="text-red-400 hover:text-req-600
+                            cursor-pointer"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label 
+                    htmlFor="editor" 
+                    className="text-lg font-semibold text-gray-600">
+                        Content
+                    </label>
+                    <JoditEditor ref = {editor} />
+                    <button type="submit" className="py-2 px-8 text-base bg-purple-500
+                    hover:bg-purple-400 rounded-3xl text-white font-semibold w-fit mt-2">Create Blog</button>
                 </div>
             </form>
         </div>
