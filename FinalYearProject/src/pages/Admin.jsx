@@ -29,13 +29,11 @@ const handleLogin = async(e) => {
 };
 
 
-
 useEffect(() => {
   checkAuth()
   .then((data) => SetIsAuth(data))
   .catch((error) => console.log(error.message));
 }, []);
-
 
 
   return (
