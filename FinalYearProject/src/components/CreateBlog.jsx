@@ -67,25 +67,39 @@ const CreateBlog = () => {
                     name = "tag" 
                     id = "tag" 
                     placeholder="Enter the tags here..."
+                    value={currentTag}
+                    onChange={(e) => setCurrentTag(e.target.value)}
                     className="rounded-2xl px-3 py-1 text-lg outline-name bg-gray-100 w-full md:w-[85%]"
                     />
-                    <button className="py-2 px-8 text-base bg-purple-500 hover:bg-purple-400 rounded-3xl text-white font-semibold w-fit">Add Tag</button>
+                    <button onClick={() => {
+                        addTag(currentTag);
+                        setCurrentTag("")
+                    }} className="py-2 px-8 text-base bg-purple-500 hover:bg-purple-400 rounded-3xl text-white font-semibold w-fit">Add Tag</button>
                     </div>
 
                     <label htmlFor="tags" className="text-lg font-semibold text-gray-600">
                        Selected Tags 
                     </label>
                     <div className="bg-gray-100 rounded-2xl">
-                        <div className="flex justify-between items-center px-2 capitalized">
-                            <span>Programming</span>
-                            <MdDelete className="text-red-400 hover:text-req-600
-                            cursor-pointer"/>
-                        </div>
+                    {
+
+                        tags.map((tag, i) => (
+                        <div key={i} className="flex justify-between items-center px-2 capitalized">
+                        <span>{tag}</span>
+                        <MdDelete className="text-red-400 hover:text-req-600
+                        cursor-pointer"/>
+                    </div>
+                    ))}                    }
+
+
+
+
                         <div className="flex justify-between items-center px-2 capitalized">
                             <span>ReactJs</span>
                             <MdDelete className="text-red-400 hover:text-req-600
                             cursor-pointer"/>
                         </div>
+
                         <div className="flex justify-between items-center px-2 capitalized">
                             <span>Mern Stack</span>
                             <MdDelete className="text-red-400 hover:text-req-600
