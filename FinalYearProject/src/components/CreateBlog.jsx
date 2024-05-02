@@ -1,6 +1,6 @@
 import { MdDelete } from "react-icons/md";
 import JoditEditor from "jodit-react";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const CreateBlog = () => {
 
@@ -15,9 +15,36 @@ const CreateBlog = () => {
 
 
     const addTag = (tag) => setTags((prev) => [...prev, tag])
-
-
     const removeTag = (tag) => setTags((prev) => prev.filter((t)=> t !== tag));
+
+    const handelThumbnailChange = useCallback(async(e) => {
+        const file = e.target.files[0];
+        if(file.size > 1000000){
+            alert("File size should be less than 1MB");
+        } else {
+            console.log(file);
+            setThumbnail(file);
+        }
+    },[])
+
+    const createPost = async(e) => {
+        e.preventDefault();
+        console.log(title, thumbnail, content);
+
+        // Function to progress
+        const onUplodeProgress = (ProgressEvent) => {
+            const percentCompleted = Math.round(
+                (ProgressEvent.loaded * 100) / ProgressEvent.total
+            );
+            setProgress(percentCompleted);
+        };
+
+        try {
+            
+        } catch (error) {
+            
+        }
+    };
 
     return (
         <div className="md:w-[60vw] bg-white my-20 mx-auto p-4 rounded-2xl">
@@ -37,6 +64,8 @@ const CreateBlog = () => {
                     id = "title" 
                     placeholder="Enter the title here..."
                     required
+                    value={title}
+                    onAbort={(e) => setTitle(e.target.value)}
                     className="rounded-2xl px-3 py-1 text-lg outline-name bg-gray-100"
                     />
                 </div>
@@ -52,6 +81,7 @@ const CreateBlog = () => {
                     id = "thumbnail" 
                     required
                     tabIndex={1}
+                    onChange={handelThumbnailChange}
                     className="rounded-2xl px-3 py-1 text-lg outline-name bg-gray-100"
                     />
                 </div>
@@ -86,12 +116,10 @@ const CreateBlog = () => {
                         tags.map((tag, i) => (
                         <div key={i} className="flex justify-between items-center px-2 capitalized">
                         <span>{tag}</span>
-                        <MdDelete className="text-red-400 hover:text-req-600
-                        cursor-pointer"/>
+                        <MdDelete className="text-red-400 hover:text-req-600 cursor-pointer"
+                        onClick ={() => removeTag(tag)}/>
                     </div>
-                    ))}                    }
-
-
+                    ))}
 
 
                         <div className="flex justify-between items-center px-2 capitalized">
@@ -113,7 +141,12 @@ const CreateBlog = () => {
                     className="text-lg font-semibold text-gray-600">
                         Content
                     </label>
-                    <JoditEditor ref = {editor} />
+
+                    <JoditEditor 
+                    ref = {editor} 
+                    value={content} 
+                    onChange = {(newContent) => setContent(newContent)} />
+
                     <button type="submit" className="py-2 px-8 text-base bg-purple-500
                     hover:bg-purple-400 rounded-3xl text-white font-semibold w-fit mt-2">Create Blog</button>
                 </div>
